@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<title> ISYSU </title>
+		<meta charset="UTF-8"/>
+		<script type="text/javascript" src="gameExec.js"> </script>
+		<script src="js/jquery-1.3.2.min.js"></script>
+		<script src="js/jquery.kxbdMarquee.js"></script>
+		<audio autoplay="autoplay" loop="loop" id = "backmusic1">
+			<source src="backmusic.mp3" type="audio/mpeg">
+		</audio>
+	</head>
+
+	<style type="text/css">
+		*{margin:0;padding:0;}
+		body{font-size:12px;}
+		a{color:#333;}
+		ul{list-style:none;}
+		#marquee1{position:absolute; top:0px; left:0px; width:820px; height:450px; overflow:hidden; background:#333;}
+		#marquee1 ul li{float:left; padding:0 1px;}
+		#marquee1 ul li img{display:block;}
+	</style>
+	
+	<body>
+		<div id="marquee1">
+			<ul>
+				<li><img src="image/big-ground1.jpg" width="5657" height="650"></li>	
+			</ul>
+		</div>
+
+		<canvas id="myFrontGround" width="815" height="445" style="border: solid; position: absolute; z-index: 0" padding="0">
+		你的浏览器不支持canvas画布元素，请更新浏览器获得演示效果。</canvas>
+		<div style="display:none;">
+			<img src="image\firstfront.jpg" id="firstfront" type=hidden/>
+			<img src="image\background.jpg" id="background" type=hidden/>
+			<img src="image\moon.png" id="moon" typen=hidden/>
+			<img src="image\schoolarship.png" id="schoolarship" type=hidden/>
+			<img src="image\run1.png" id="run1" type=hidden/>
+			<img src="image\run2.png" id="run2" type=hidden/>
+			<img src="image\run1h.png" id="run1h" type=hidden/>
+			<img src="image\run2h.png" id="run2h" type=hidden/>
+			<img src="image\tree.png" id="tree" type=hidden/>
+			<img src="image\xtree.png" id="xtree" type=hidden/>
+			<img src="image\cloud.png" id="cloud" type=hidden/>
+			<img src="image\medicinebox.png" id="medicinebox" type=hidden/>			
+			<img src="image\score.png" id="score" type=hidden/>
+			<img src="image\pause.png" id="pause" type=hidden/>
+			<img src="image\gameover.png" id="gameover" type=hidden/>
+			<img src="image\start.png" id="start" type=hidden/>
+			<img src="image\hint.png" id="hint" type=hidden/>
+			<img src="image\sheet.png" id="sheet" type=hidden/>
+			<img src="image\time_schoolarship.png" id="time_schoolarship" type=hidden/>
+			<img src="image\null.png" id="null" type=hidden/>
+			<img src="image\time_failed.png" id="time_failed" type=hidden/>
+			<img src="image\physical_test.png" id="physical_test" type=hidden/>
+			<img src="image\offer.png" id="offer" type=hidden/>
+			<img src="image\time_offer.png" id="time_offer" type=hidden/>
+			<img src="image\tuimian.png" id="tuimian" type=hidden/>
+			<img src="image\shougeji.png" id="shougeji" type=hidden/>
+			<img src="image\pipa.png" id="pipa" type=hidden/>
+			<img src="image\wei.png" id="wei" type=hidden/>
+			<img src="image\rule.png" id="rule" type=hidden/>
+			<img src="image\rulebackground.jpg" id="rulebackground" type=hidden/>
+			<img src="image\logo.png" id="logo" type=hidden/>
+		</div>
+
+		<script type="text/javascript">
+			var BG = document.getElementById("myFrontGround");
+			var BGcontext=BG.getContext("2d"); 
+			var MainPageImg1, MainPageImg2, MainPageImg3, MainPageImg4;
+			var MainPagePaint = function()
+			{
+				BGcontext.clearRect(0, 0, 850, 450);
+				MainPageImg1 = document.getElementById("firstfront");
+				MainPageImg1.onload = function() {
+					BGcontext.drawImage(MainPageImg1, 0, 0, 850, 450);	
+				};
+				MainPageImg4 = document.getElementById("logo");
+				MainPageImg4.onload = function() {
+					BGcontext.drawImage(MainPageImg4, 200, 50, 400, 136);
+				}
+				MainPageImg2 = document.getElementById("start");
+				MainPageImg2.onload = function() {
+					BGcontext.drawImage(MainPageImg2, 400-100/2, 300, 100, 34);	
+				};
+				MainPageImg3 = document.getElementById("rule");
+				MainPageImg3.onload = function() {
+					BGcontext.drawImage(MainPageImg3, 400-100/2, 380, 100, 34);	
+				};
+			};
+			var myGame = {
+				state: "wait"
+			};
+
+			MainPagePaint();
+			document.addEventListener("mousedown",function(e){
+				   if (myGame.state == "end")
+				   {
+						myGame.state = "wait";
+						location.reload();
+				   }
+				   else if (myGame.state == "wait")
+				   {
+						var mouseX = e.pageX-BG.clientLeft;
+						var mouseY = e.pageY-BG.clientTop;
+						if (300 < mouseY&&mouseY <334)
+						{
+							myGame.state = "exec";
+							BGcontext.clearRect(0, 0, 850, 450);
+							gameExec(myGame);
+							(function(){
+								$("#marquee1").kxbdMarquee({direction:"left",scrollDelay:50,loop:1});
+							})();
+						}
+						else if (380 < mouseY && mouseY < 420) {
+							myGame.state = "rule";
+							BGcontext.clearRect(0, 0, 850, 450);
+							showRule(myGame);
+						}
+				   }
+			},false);
+		</script>	
+	</body>
+	
+
+ </html>
